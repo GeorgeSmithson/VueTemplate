@@ -1,6 +1,6 @@
-# woolgrease
+# Vue Template
 
-This template should help get you started developing with Vue 3 in Vite.
+This template should help get you started developing with Vue 3 in Vite. It contains Pinia, TypeScript, Tailwind and PrimeVue.
 
 ## Recommended IDE Setup
 

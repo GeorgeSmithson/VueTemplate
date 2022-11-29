@@ -1,85 +1,52 @@
-<script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
-<template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+<template id="main">
+  <main >
+    <div style="height:13vh; padding-left: 9vw; padding-bottom:2vh">
+      <LMatic 
+        v-for="agv in Object.fromEntries(Object.entries(AGVStore.AGVCollection).filter(([k,v]) => k.startsWith('L')))" 
+        :key="agv.agvName"
+        :agv="agv" />
     </div>
-  </header>
-
-  <RouterView />
+    <div style="height:85vh; display:grid;">
+      <KMatic 
+        v-for="agv in Object.fromEntries(Object.entries(AGVStore.AGVCollection).filter(([k,v]) => k.startsWith('K')))" 
+        :key="agv.agvName"
+        :agv ="agv"/>
+    </div>
+  </main>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
+<script lang="ts" setup>
+import KMatic from './components/KMatic.vue';
+import LMatic from './components/LMatic.vue';
+import { useAGVStore} from '@/store/AGVStore';
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+const AGVStore = useAGVStore();
+AGVStore.getAGVInfo();
 
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
+var element = document.querySelector("#app");
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+function fullscreen()
+{
+  if (element)
+  {
+    element.requestFullscreen()
   }
+}
+document.addEventListener("keypress", fullscreen);
+document.addEventListener("click", fullscreen);
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
+</script>
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+<style lang="scss">
+*
+{
+  margin: 0;
+}
+main 
+{
+  background: black;
+  color: white;
+  height: 100vh;
+  width: 100vw;
 }
 </style>
